@@ -24,12 +24,14 @@
     <ClInclude Include="..\..\..\..\code\Mesh.hpp" />
     <ClInclude Include="..\..\..\..\code\Model.hpp" />
     <ClInclude Include="..\..\..\..\code\Scene.hpp" />
+    <ClInclude Include="..\..\..\..\code\Skybox.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\code\main.cpp" />
     <ClCompile Include="..\..\..\..\code\Mesh.cpp" />
     <ClCompile Include="..\..\..\..\code\Model.cpp" />
     <ClCompile Include="..\..\..\..\code\Scene.cpp" />
+    <ClCompile Include="..\..\..\..\code\Skybox.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{636EB426-ECAF-4E3F-ACE9-9DF1106AE01D}</ProjectGuid>

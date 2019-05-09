@@ -1,8 +1,7 @@
-#ifndef SCENE_HEADER
-#define SCENE_HEADER
+#ifndef SKYBOX_HEADER
+#define SKYBOX_HEADER
 
 #include <GL/glew.h>            // Debe incluirse antes que gl.h
-#include "Model.hpp"
 #include <string>
 #include <memory>
 #include <map>
@@ -11,7 +10,7 @@
 namespace openglScene
 {
 
-    class Scene
+    class Skybox
     {
     private:
 
@@ -20,31 +19,18 @@ namespace openglScene
 
         GLint  model_view_matrix_id;
         GLint  projection_matrix_id;
-		GLint      normal_matrix_id;
-
-        std::map<std::string, std::shared_ptr < Model >>   models;
-
-        float  angle;
-
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::mat4 view;
 
     public:
 
-        Scene(int width, int height);
+        Skybox(const std::string & texture_path);
 
-        void   Update ();
         void   Render ();
-        void   Resize (int width, int height);
 
     private:
 
         GLuint compile_shaders        ();
         void   show_compilation_error (GLuint  shader_id);
         void   show_linkage_error     (GLuint program_id);
-		void   configure_light		  (GLuint program_id);
 
     };
 

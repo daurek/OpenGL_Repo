@@ -19,14 +19,24 @@
 
 namespace openglScene
 {
-
     using namespace std;
 
     const string Scene::vertex_shader_code =
         "#version 330\n"
+		""
+		"struct Light"
+		"{"
+		"    vec4 position;"
+		"    vec3 color;"
+		"};"
+		""
+		"uniform Light light;"
+		"uniform float ambient_intensity;"
+		"uniform float diffuse_intensity;"
         ""
         "uniform mat4 model_view_matrix;"
         "uniform mat4 projection_matrix;"
+		"uniform mat4     normal_matrix;"
         ""
         "layout (location = 0) in vec3 vertex_coordinates;"
         "layout (location = 1) in vec3 vertex_color;"
@@ -38,9 +48,15 @@ namespace openglScene
         ""
         "void main()"
         "{"
-		"   gl_Position = projection_matrix * model_view_matrix * vec4(vertex_coordinates, 1.0);"
-		"	front_color = vertex_color * vertex_normal;"
+		"   vec4  normal   = normal_matrix * vec4(vertex_normal, 1.0);"
+		"   vec4  position = model_view_matrix * vec4(vertex_coordinates, 1.0);"
+		""
+		"   vec4  light_direction = light.position - position;"
+		"   float light_intensity = diffuse_intensity * max (dot (normalize (normal.xyz), normalize (light_direction.xyz)), 0.0);"
+		""
+		"	front_color = ambient_intensity * vertex_color + diffuse_intensity * light_intensity * light.color * vertex_color;"
 		"	TexCoord = vertex_uv;"
+		"   gl_Position = projection_matrix * position;"
         "}";
 
 	const string Scene::fragment_shader_code =
@@ -55,8 +71,8 @@ namespace openglScene
 		"void main()"
 		"{"
 	  //"    fragment_color = vec4(front_color, 1.0) * texture(diffuse, TexCoord);"
-	//	"    fragment_color = vec4(front_color, 1.0);"
-		"    fragment_color = texture(diffuse, TexCoord);"
+		"    fragment_color = vec4(front_color, 1.0);"
+	//	"    fragment_color = texture(diffuse, TexCoord);"
         "}";
 
     Scene::Scene(int width, int height)
@@ -80,6 +96,9 @@ namespace openglScene
 
         model_view_matrix_id = glGetUniformLocation (program_id, "model_view_matrix");
         projection_matrix_id = glGetUniformLocation (program_id, "projection_matrix");
+		normal_matrix_id = glGetUniformLocation(program_id, "normal_matrix");
+
+		configure_light(program_id);
 
         Resize (width, height);
     }
@@ -111,6 +130,8 @@ namespace openglScene
 		model_view_matrix = glm::scale	   (model_view_matrix, glm::vec3(0.001f, 0.001f, 0.001f));
 
         glUniformMatrix4fv (model_view_matrix_id, 1, GL_FALSE, glm::value_ptr(model_view_matrix));
+		glm::mat4 normal_matrix = glm::transpose(glm::inverse(model_view_matrix));
+		glUniformMatrix4fv(normal_matrix_id, 1, GL_FALSE, glm::value_ptr(normal_matrix));
 
         // Render every model
 		for (auto & model : models)
@@ -175,6 +196,8 @@ namespace openglScene
         return (program_id);
     }
 
+
+
     void Scene::show_compilation_error (GLuint shader_id)
     {
         string info_log;
@@ -214,5 +237,18 @@ namespace openglScene
 
         assert(false);
     }
+
+	void Scene::configure_light(GLuint program_id)
+	{
+		GLint light_position =		glGetUniformLocation(program_id, "light.position");
+		GLint light_color =			glGetUniformLocation(program_id, "light.color");
+		GLint ambient_intensity =	glGetUniformLocation(program_id, "ambient_intensity");
+		GLint diffuse_intensity =	glGetUniformLocation(program_id, "diffuse_intensity");
+
+		glUniform4f(light_position, 10.f, 10.f, 10.f, 1.f);
+		glUniform3f(light_color, 1.f, 1.f, 1.f);
+		glUniform1f(ambient_intensity, 0.2f);
+		glUniform1f(diffuse_intensity, 0.8f);
+	}
 
 }
