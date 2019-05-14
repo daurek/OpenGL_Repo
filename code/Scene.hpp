@@ -4,6 +4,7 @@
 #include <GL/glew.h>            // Debe incluirse antes que gl.h
 #include "Model.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
 #include <string>
 #include <memory>
 #include <map>
@@ -16,13 +17,12 @@ namespace openglScene
     {
     private:
 
-		std::shared_ptr<Shader>			vertex_shader;
-        static const std::string   vertex_shader_code;
-        static const std::string fragment_shader_code;
 
         GLint  model_view_matrix_id;
         GLint  projection_matrix_id;
 		GLint      normal_matrix_id;
+		std::shared_ptr<Shader>			defaultShader;
+		std::shared_ptr<Camera>			camera;
 
         std::map<std::string, std::shared_ptr < Model >>   models;
 
@@ -40,13 +40,6 @@ namespace openglScene
         void   Update ();
         void   Render ();
         void   Resize (int width, int height);
-
-    private:
-
-        GLuint compile_shaders        ();
-        void   show_compilation_error (GLuint  shader_id);
-        void   show_linkage_error     (GLuint program_id);
-		void   configure_light		  (GLuint program_id);
 
     };
 

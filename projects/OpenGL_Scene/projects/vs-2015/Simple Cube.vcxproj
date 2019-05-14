@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\code\Camera.hpp" />
     <ClInclude Include="..\..\..\..\code\Color_Buffer.hpp" />
     <ClInclude Include="..\..\..\..\code\Color_Buffer_Rgba8888.hpp" />
     <ClInclude Include="..\..\..\..\code\Mesh.hpp" />
@@ -28,6 +29,7 @@
     <ClInclude Include="..\..\..\..\code\Skybox.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\code\Camera.cpp" />
     <ClCompile Include="..\..\..\..\code\main.cpp" />
     <ClCompile Include="..\..\..\..\code\Mesh.cpp" />
     <ClCompile Include="..\..\..\..\code\Model.cpp" />
@@ -36,6 +38,7 @@
     <ClCompile Include="..\..\..\..\code\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\..\..\assets\shaders\fragment_shader.txt" />
     <Text Include="..\..\..\..\assets\shaders\vertex_shader.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
