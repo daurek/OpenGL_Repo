@@ -17,6 +17,12 @@
 #include <glm/gtc/matrix_transform.hpp>         // translate, rotate, scale, perspective
 #include <glm/gtc/type_ptr.hpp>                 // value_ptr
 
+extern "C"
+{
+	#include <SOIL2.h>
+}
+
+
 namespace openglScene
 {
     using namespace std;
@@ -81,24 +87,23 @@ namespace openglScene
     {
 		// Load models
 		models["car"] = std::make_shared<Model>("../../../../assets/meshes/car.fbx");
-	//	models["car2"] = std::make_shared<Model>("../../../../assets/meshes/container.fbx");
 
         // Se establece la configuración básica:
         glEnable	 (GL_CULL_FACE);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glClearColor (0.1f, 0.1f, 0.1f, 1.f);
 
         // Se compilan y se activan los shaders:
+		vertex_shader = std::make_shared<Shader>(Shader::Source_Code::from_file("../../../../assets/meshes/car.fbx"), GL_VERTEX_SHADER);
+        //GLuint program_id = compile_shaders ();
+		vertex_shader->Use();
+        //glUseProgram (program_id);
 
-        GLuint program_id = compile_shaders ();
+        //model_view_matrix_id =	glGetUniformLocation (vertex_shader->shader_object_id, "model_view_matrix");
+        //projection_matrix_id =	glGetUniformLocation (vertex_shader->shader_object_id, "projection_matrix");
+		//normal_matrix_id =		glGetUniformLocation (program_id, "normal_matrix");
 
-        glUseProgram (program_id);
 
-        model_view_matrix_id = glGetUniformLocation (program_id, "model_view_matrix");
-        projection_matrix_id = glGetUniformLocation (program_id, "projection_matrix");
-		normal_matrix_id = glGetUniformLocation(program_id, "normal_matrix");
-
-		configure_light(program_id);
+		//configure_light(program_id);
 
         Resize (width, height);
     }
@@ -121,6 +126,8 @@ namespace openglScene
     {
         glClear (GL_COLOR_BUFFER_BIT);
 
+		
+
         // Se rota el cubo y se empuja hacia el fondo:
 
         glm::mat4 model_view_matrix;
@@ -129,9 +136,9 @@ namespace openglScene
         model_view_matrix = glm::rotate    (model_view_matrix, angle, glm::vec3(0.f, 2.f, 0.f));
 		model_view_matrix = glm::scale	   (model_view_matrix, glm::vec3(0.001f, 0.001f, 0.001f));
 
-        glUniformMatrix4fv (model_view_matrix_id, 1, GL_FALSE, glm::value_ptr(model_view_matrix));
+        //glUniformMatrix4fv (model_view_matrix_id, 1, GL_FALSE, glm::value_ptr(model_view_matrix));
 		glm::mat4 normal_matrix = glm::transpose(glm::inverse(model_view_matrix));
-		glUniformMatrix4fv(normal_matrix_id, 1, GL_FALSE, glm::value_ptr(normal_matrix));
+		//glUniformMatrix4fv(normal_matrix_id, 1, GL_FALSE, glm::value_ptr(normal_matrix));
 
         // Render every model
 		for (auto & model : models)

@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>            // Debe incluirse antes que gl.h
 #include "Model.hpp"
+#include "Shader.hpp"
 #include <string>
 #include <memory>
 #include <map>
@@ -15,6 +16,7 @@ namespace openglScene
     {
     private:
 
+		std::shared_ptr<Shader>			vertex_shader;
         static const std::string   vertex_shader_code;
         static const std::string fragment_shader_code;
 
