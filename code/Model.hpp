@@ -9,6 +9,7 @@
 // Libraries
 #include <SFML/OpenGL.hpp>
 #include <assimp/scene.h>
+#include "glm/glm.hpp"
 
 namespace openglScene
 {
@@ -20,6 +21,8 @@ namespace openglScene
 		Model(const std::string & path);
 
         void Render ();
+
+		glm::mat4 transform;
 
     private:
 

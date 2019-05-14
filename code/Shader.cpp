@@ -47,18 +47,18 @@ namespace openglScene
 		vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, &vShaderCode, NULL);
 		glCompileShader(vertex);
-		checkCompileErrors(vertex, "VERTEX");
+		CheckErrors(vertex, "VERTEX");
 		// fragment Shader
 		fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &fShaderCode, NULL);
 		glCompileShader(fragment);
-		checkCompileErrors(fragment, "FRAGMENT");
+		CheckErrors(fragment, "FRAGMENT");
 		// shader Program
 		shaderId = glCreateProgram();
 		glAttachShader(shaderId, vertex);
 		glAttachShader(shaderId, fragment);
 		glLinkProgram(shaderId);
-		checkCompileErrors(shaderId, "PROGRAM");
+		CheckErrors(shaderId, "PROGRAM");
 		// delete the shaders as they're linked into our program now and no longer necessary
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
@@ -69,7 +69,7 @@ namespace openglScene
 		glUseProgram(shaderId);
 	}
 
-	void Shader::checkCompileErrors(unsigned int shader, std::string type)
+	void Shader::CheckErrors(unsigned int shader, std::string type)
 	{
 		int success;
 		char infoLog[1024];

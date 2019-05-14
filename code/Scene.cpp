@@ -1,14 +1,3 @@
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *                                                                             *
- *  Started by Ángel on may of 2014                                            *
- *                                                                             *
- *  This is free software released into the public domain.                     *
- *                                                                             *
- *  angel.rodriguez@esne.edu                                                   *
- *                                                                             *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 #include "Scene.hpp"
 #include <iostream>
 #include <cassert>
@@ -27,16 +16,14 @@ namespace openglScene
 {
     using namespace std;
 
-    Scene::Scene(int width, int height)
-    :
-        angle(0)
-    {
-        // Basic OpenGL Config:
-        glEnable	 (GL_CULL_FACE);
-        glClearColor (0.1f, 0.1f, 0.1f, 1.f);
+	Scene::Scene(int width, int height)
+	{
+		// Basic OpenGL Config:
+		glEnable(GL_CULL_FACE);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 
 		// Create camera
-		camera = std::make_shared<Camera>(2.f, GLfloat(width) / height, 1.f, 50.f);
+		camera = std::make_shared<Camera>(glm::vec3{0.f, 0.f, -10.f}, glm::vec3{ 0.f, 0.f, 0.f }, 2.f, GLfloat(width) / height, 1.f, 50.f);
 
 		// Load models
 		models["car"] = std::make_shared<Model>("../../../../assets/meshes/car.fbx");
@@ -44,7 +31,7 @@ namespace openglScene
         // Compile and Use Shader
 		defaultShader = std::make_shared<Shader>("../../../../assets/shaders/vertex_shader.txt", "../../../../assets/shaders/fragment_shader.txt");
 		defaultShader->Use();
-		// Configure Shader
+		// Configure Shader Lighting
 		defaultShader->setVector4("light.position",		{ 10.f, 10.f, 10.f, 1.f });
 		defaultShader->setVector3("light.color",		{ 0.7f, 0.3f, 0.2f });
 		defaultShader->setFloat("ambient_intensity", 0.2f );
@@ -55,26 +42,19 @@ namespace openglScene
 
     void Scene::Update ()
     {
-        angle += 0.5f;
-
+		// Camera Movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			cameraPos += 0.01f * glm::vec3{0, 0, 1};
+			camera->Move({ 0, 0, 1	});
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			cameraPos -= 0.01f * cameraFront;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * 0.01f;
+			camera->Move({ 0, 0, -1 });
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * 0.01f;
+			camera->Move({ 1, 0, 0	});
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			camera->Move({ -1, 0, 0 });
 
 		// Update Shader properties
-		glm::mat4 model_view_matrix;
-
-		model_view_matrix = glm::translate(model_view_matrix, glm::vec3(0.f, 0.f, -10.f) + cameraPos);
-		model_view_matrix = glm::rotate(model_view_matrix, angle, glm::vec3(0.f, 2.f, 0.f));
-		model_view_matrix = glm::scale(model_view_matrix, glm::vec3(0.001f, 0.001f, 0.001f));
-
-		defaultShader->setMatrix4("model_view_matrix", model_view_matrix);
-		defaultShader->setMatrix4("normal_matrix", glm::transpose(glm::inverse(model_view_matrix)));
+		defaultShader->setMatrix4("model_view_matrix", camera->getView());
+		defaultShader->setMatrix4("normal_matrix", glm::transpose(glm::inverse(camera->getView())));
 
     }
 
@@ -90,7 +70,7 @@ namespace openglScene
 
     void Scene::Resize (int width, int height)
     {
-		defaultShader->setMatrix4("projection_matrix", camera->GetProjection());
+		defaultShader->setMatrix4("projection_matrix", camera->getProjection());
 
         glViewport (0, 0, width, height);
     }

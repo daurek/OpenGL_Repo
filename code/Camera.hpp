@@ -2,7 +2,6 @@
 #define CAMERA_HEADER
 
 // Libraries
-#include <SFML/OpenGL.hpp>
 #include "glm/glm.hpp"
 
 namespace openglScene
@@ -12,20 +11,32 @@ namespace openglScene
     {
     public:
 
-		Camera(float fov, float aspectRation, float nearPlane, float farPlane);
+		Camera(glm::vec3 position, glm::vec3 rotation, float fov, float aspectRation, float nearPlane, float farPlane);
 
 		void Move(glm::vec3 direction);
 
-		glm::mat4 GetProjection() const
+		glm::vec3 getPosition() const
 		{
-			return projectionMatrix;
+			return glm::vec3(view[3].x, view[3].y, view[3].z);
 		}
+
+		glm::mat4 getView() const
+		{
+			return view;
+		}
+
+		glm::mat4 getProjection() const
+		{
+			return projection;
+		}
+
 
 	private:
 
-		glm::vec3	position;
-		glm::mat4	projectionMatrix;
-		float		speed;
+		glm::mat4   view;
+		glm::mat4	projection;
+
+		float		speed = 1.f;
     };
 
 }
