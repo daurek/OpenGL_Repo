@@ -5,6 +5,7 @@
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+#include "Skybox.hpp"
 #include <string>
 #include <memory>
 #include <map>
@@ -17,27 +18,23 @@ namespace openglScene
     {
     private:
 
-
-        GLint  model_view_matrix_id;
-        GLint  projection_matrix_id;
-		GLint      normal_matrix_id;
-		std::shared_ptr<Shader>			defaultShader;
 		std::shared_ptr<Camera>			camera;
+		std::shared_ptr<Skybox>			skybox;
 
-        std::map<std::string, std::shared_ptr < Model >>   models;
-
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::mat4 view;
+        std::map<std::string, std::shared_ptr < Model >>	models;
+        std::map<std::string, std::shared_ptr < Shader >>	shaderList;
 
     public:
 
         Scene(int width, int height);
 
-        void   Update ();
-        void   Render ();
-        void   Resize (int width, int height);
+        void	Update ();
+        void	Render ();
+        void	Resize (int width, int height);
+
+	private:
+
+		void	CompileShaders();
 
     };
 

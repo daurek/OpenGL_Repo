@@ -3,12 +3,10 @@
 
 #include <SFML/OpenGL.hpp>
 #include <vector>
-#include "Color_Buffer_Rgba8888.hpp"
+#include <memory>
 
 namespace openglScene
 {
-	typedef Color_Buffer_Rgba8888 Texture;
-
     class Mesh
     {
     private:
@@ -40,6 +38,18 @@ namespace openglScene
 		// Face Data
 		std::vector<GLuint> indices;
 
+		struct Texture 
+		{
+			GLuint id;
+			std::string type;
+
+			Texture(GLuint _id, std::string _type)
+			{
+				id = _id;
+				type = _type;
+			}
+		};
+		bool	hasTexture = false;
     private:
 
         GLuint vbo_ids[VBO_COUNT];      // Ids de los VBOs que se usan
@@ -47,11 +57,16 @@ namespace openglScene
 
     public:
 
-		Mesh(std::vector<GLfloat> _coordinates, std::vector<GLfloat> _normals, std::vector<GLfloat> _uv, std::vector<GLuint> _indices);
+		Mesh(std::vector<GLfloat> _coordinates, std::vector<GLfloat> _normals, std::vector<GLfloat> _uv, std::vector<GLuint> _indices, const std::string & texturePath = "");
 		Mesh(std::vector<Vertex> vertices, std::vector<GLuint> _indices);
         ~Mesh();
 
         void Render ();
+
+	private:
+
+		std::shared_ptr<Texture> texture;
+		std::shared_ptr<Texture> LoadTexture(std::string texturePath, std::string type);
 
     };
 

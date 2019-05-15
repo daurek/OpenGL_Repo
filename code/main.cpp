@@ -1,14 +1,3 @@
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *                                                                             *
- *  Started by Ángel on may of 2014                                            *
- *                                                                             *
- *  This is free software released into the public domain.                     *
- *                                                                             *
- *  angel.rodriguez@esne.edu                                                   *
- *                                                                             *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 #include <cassert>
 #include <GL/glew.h>            // Debe incluirse antes que gl.h
 #include "Scene.hpp"
@@ -21,13 +10,15 @@ using namespace openglScene;
 int main ()
 {
     // SFML Window
-	sf::Vector2i screenDimension(800, 600);
+	sf::Vector2i screenDimension(1280, 720);
     Window window(VideoMode(screenDimension.x, screenDimension.y), "OpenGL_Scene", Style::Default, ContextSettings(32));
     window.setVerticalSyncEnabled (true);
 
     // Initialize Glew
     GLenum glew_initialization =  glewInit ();
     assert(glew_initialization == GLEW_OK);
+
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
     Scene scene(screenDimension.x, screenDimension.y);
 

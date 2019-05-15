@@ -9,7 +9,7 @@ namespace openglScene
 
     Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath)
     :
-        shaderId(0)
+        shaderId(0), shaderType(DEFAULT)
     {
 		// 1. retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
@@ -67,6 +67,22 @@ namespace openglScene
 	void Shader::Use()
 	{
 		glUseProgram(shaderId);
+	}
+
+	void Shader::Render()
+	{
+		// Send Model matrix and render model
+		for (auto & model : modelsByShader)
+		{
+			setMatrix4("model_matrix", model->getTransform());
+			model->Render();
+		}
+	}
+
+	void Shader::AddModel(std::shared_ptr<Model> model)
+	{
+		if (model)
+			modelsByShader.push_back(model);
 	}
 
 	void Shader::CheckErrors(unsigned int shader, std::string type)

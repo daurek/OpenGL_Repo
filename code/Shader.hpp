@@ -1,61 +1,83 @@
-#ifndef OPENGL_TOOLKIT_SHADER_HEADER
-#define OPENGL_TOOLKIT_SHADER_HEADER
+#ifndef SHADER_HEADER
+#define SHADER_HEADER
 
-    #include <string>
-	#include <GL/glew.h> 
-	#include <glm/gtc/type_ptr.hpp>    
+#include <GL/glew.h> 
+#include <string>
+#include "Model.hpp"
+#include <glm/gtc/type_ptr.hpp>    
 
-    namespace openglScene
+namespace openglScene
+{
+
+    class Shader
     {
 
-        class Shader
+    private:
+
+        Shader(const Shader & );
+
+		GLuint      shaderId;
+
+
+
+    public:
+
+        Shader(const char* vertexFilePath, const char* fragmentFilePath);
+
+		void Use();
+
+		void Render();
+
+        GLuint getShaderID() const
         {
+            return shaderId;
+        }
 
-        private:
+		void AddModel(std::shared_ptr<Model> model);
 
-            Shader(const Shader & );
+		// Shader Property Setters
 
-			GLuint      shaderId;
+		void setInt(const std::string &name, int value) const
+		{
+			glUniform1i(glGetUniformLocation(shaderId, name.c_str()), value);
+		}
 
-        public:
+		void setFloat(const std::string &name, float value) const
+		{
+			glUniform1f(glGetUniformLocation(shaderId, name.c_str()), value);
+		}
 
-            Shader(const char* vertexFilePath, const char* fragmentFilePath);
+		void setVector3(const std::string &name, glm::vec3 value) const
+		{
+			glUniform3fv(glGetUniformLocation(shaderId, name.c_str()), 1, glm::value_ptr(value));
+		}
 
-			void Use();
+		void setVector4(const std::string &name, glm::vec4 value) const
+		{
+			glUniform4fv(glGetUniformLocation(shaderId, name.c_str()), 1, glm::value_ptr(value));
+		}
 
-            GLuint getShaderID() const
-            {
-                return shaderId;
-            }
+		void setMatrix4(const std::string &name, glm::mat4 value) const
+		{
+			glUniformMatrix4fv(glGetUniformLocation(shaderId, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		}
 
-			// Shader Property Setters
+		enum Type
+		{
+			DEFAULT,
+			ALPHA
+		};
 
-			void setFloat(const std::string &name, float value) const
-			{
-				glUniform1f(glGetUniformLocation(shaderId, name.c_str()), value);
-			}
+		Type shaderType;
 
-			void setVector3(const std::string &name, glm::vec3 value) const
-			{
-				glUniform3fv(glGetUniformLocation(shaderId, name.c_str()), 1, glm::value_ptr(value));
-			}
+	private:
 
-			void setVector4(const std::string &name, glm::vec4 value) const
-			{
-				glUniform4fv(glGetUniformLocation(shaderId, name.c_str()), 1, glm::value_ptr(value));
-			}
+		std::vector <std::shared_ptr<Model>> modelsByShader;
 
-			void setMatrix4(const std::string &name, glm::mat4 value) const
-			{
-				glUniformMatrix4fv(glGetUniformLocation(shaderId, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
-			}
+		void CheckErrors(unsigned int shader, std::string type);
 
-		private:
+    };
 
-			void CheckErrors(unsigned int shader, std::string type);
-
-        };
-
-    }
+}
 
 #endif

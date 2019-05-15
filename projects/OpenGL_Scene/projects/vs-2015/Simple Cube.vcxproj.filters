@@ -13,18 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\defaultShader">
+      <UniqueIdentifier>{fe438387-6cb9-471d-8b4a-67f7d7f2c5a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\skyboxShader">
+      <UniqueIdentifier>{4de5b9cb-58fc-4817-86f7-77050cf3cd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\transparentShader">
+      <UniqueIdentifier>{d7e44c56-badb-457a-b523-fb6ea6604c45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\code\Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\code\Scene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\code\Color_Buffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\code\Color_Buffer_Rgba8888.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\code\Model.hpp">
@@ -37,6 +40,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\code\Camera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\code\Node.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,13 +68,28 @@
     <ClCompile Include="..\..\..\..\code\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\code\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\assets\shaders\vertex_shader.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="..\..\..\..\assets\shaders\default\fragment_shader.txt">
+      <Filter>Resource Files\defaultShader</Filter>
     </Text>
-    <Text Include="..\..\..\..\assets\shaders\fragment_shader.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="..\..\..\..\assets\shaders\default\vertex_shader.txt">
+      <Filter>Resource Files\defaultShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\skybox\skybox_fragment_shader.txt">
+      <Filter>Resource Files\skyboxShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\skybox\skybox_vertex_shader.txt">
+      <Filter>Resource Files\skyboxShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\transparent\fragment_shader.txt">
+      <Filter>Resource Files\transparentShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\transparent\vertex_shader.txt">
+      <Filter>Resource Files\transparentShader</Filter>
     </Text>
   </ItemGroup>
 </Project>

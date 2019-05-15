@@ -1,29 +1,21 @@
 #ifndef CAMERA_HEADER
 #define CAMERA_HEADER
 
+#include "Node.hpp"
 // Libraries
 #include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace openglScene
 {
 
-    class Camera
+    class Camera : public Node
     {
     public:
 
-		Camera(glm::vec3 position, glm::vec3 rotation, float fov, float aspectRation, float nearPlane, float farPlane);
+		Camera(float fov, float aspectRation, float nearPlane, float farPlane);
 
-		void Move(glm::vec3 direction);
-
-		glm::vec3 getPosition() const
-		{
-			return glm::vec3(view[3].x, view[3].y, view[3].z);
-		}
-
-		glm::mat4 getView() const
-		{
-			return view;
-		}
+		virtual void Update(glm::mat4 _transform = glm::mat4(1.0f)) override;
 
 		glm::mat4 getProjection() const
 		{
@@ -33,11 +25,12 @@ namespace openglScene
 
 	private:
 
-		glm::mat4   view;
 		glm::mat4	projection;
 
-		float		speed = 1.f;
-    };
+		float		fov;
+		float		speed = 0.1f;
+
+	};
 
 }
 

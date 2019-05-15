@@ -12,7 +12,7 @@ extern "C"
 
 namespace openglScene
 {
-	Model::Model(const std::string & path)
+	Model::Model(const std::string & path, const std::string & texturePath)
 	{
 		// Create Assimp Importer
 		Assimp::Importer importer;
@@ -26,11 +26,18 @@ namespace openglScene
 		}
 		std::cout << "______________________________________________________" << std::endl;
 		std::cout << "Loading Model: " << path << std::endl;
-
 		// Load meshes
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-			meshes.push_back(LoadMesh(scene->mMeshes[i], scene));
+			meshes.push_back(LoadMesh(scene->mMeshes[i], scene, texturePath));
 		std::cout << "______________________________________________________" << std::endl;
+	}
+
+	void Model::Update(glm::mat4 parentTransform)
+	{
+		transform = parentTransform * translation * rotation * scaling;
+
+		for (auto & model : children)
+			model.second->Update(transform);
 	}
 
 	void Model::Render()
@@ -40,7 +47,7 @@ namespace openglScene
 			mesh->Render();
 	}
 
-	std::shared_ptr<Mesh> Model::LoadMesh(aiMesh * mesh, const aiScene * scene)
+	std::shared_ptr<Mesh> Model::LoadMesh(aiMesh * mesh, const aiScene * scene, const std::string & texturePath)
 	{
 		std::cout << "	Loading Mesh: " << mesh->mName.C_Str() << std::endl;
 
@@ -91,15 +98,7 @@ namespace openglScene
 		std::cout << "		Vertices: " << mesh->mNumVertices << std::endl;
 		std::cout << "		Indices:  " << indices.size() << std::endl;
 
-		if (mesh->mMaterialIndex > 0)
-		{
-			aiString path;
-			
-			scene->mMaterials[mesh->mMaterialIndex]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &path);
-			std::cout << "		Material Path: " << path.C_Str() << std::endl;
-		}
-
-		return std::make_shared<Mesh>(coordinates, normals, uv, indices);
+		return std::make_shared<Mesh>(coordinates, normals, uv, indices, texturePath);
 	}
 
 }
