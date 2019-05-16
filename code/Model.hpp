@@ -3,7 +3,7 @@
 
 // Header
 #include "Mesh.hpp"
-#include "Node.hpp"
+#include "Shader.hpp"
 
 // System
 #include <vector>
@@ -16,15 +16,15 @@
 namespace openglScene
 {
 
-    class Model : public Node
+    class Model : public Drawable
     {
     public:
 
-		Model(const std::string & modelPath, const std::string & texturePath = "");
+		Model(Shader * shader, const std::string & modelPath, const std::string & texturePath = "");
 
 		virtual void Update(glm::mat4 _transform = glm::mat4(1.0f)) override;
 
-        void Render ();
+		virtual void Render () override;
 
     private:
 

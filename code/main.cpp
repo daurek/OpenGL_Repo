@@ -19,6 +19,7 @@ int main ()
     assert(glew_initialization == GLEW_OK);
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	window.display();
 
     Scene scene(screenDimension.x, screenDimension.y);
 

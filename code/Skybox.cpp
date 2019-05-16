@@ -1,5 +1,6 @@
 #include "Skybox.hpp"
 #include <iostream>
+#include <vector>
 #include <cassert>
 
 #include <glm/gtc/matrix_transform.hpp>         // translate, rotate, scale, perspective
@@ -54,9 +55,9 @@ namespace openglScene
 		+1.0f, -1.0f, +1.0f,
 	};
 
-    Skybox::Skybox(const std::string & texture_path)
+    Skybox::Skybox(Shader * shader, const std::string & texture_path) : Drawable(shader)
     {
-
+		// Load cubemap skybox textures
 		cubemapTexture = LoadCubemap({
 			texture_path + "right.jpg",
 			texture_path + "left.jpg",
@@ -65,8 +66,6 @@ namespace openglScene
 			texture_path + "front.jpg",
 			texture_path + "back.jpg"
 		});
-
-		skyboxShader = std::make_shared<Shader>("../../../../assets/shaders/skybox/skybox_vertex_shader.txt", "../../../../assets/shaders/skybox/skybox_fragment_shader.txt");
 
 		float skyboxVertices[] = {
 			// positions          
@@ -122,6 +121,11 @@ namespace openglScene
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     }
 
+	void Skybox::Update(glm::mat4 _transform)
+	{
+
+	}
+
     void Skybox::Render ()
     {
 		glDepthFunc(GL_LEQUAL);
@@ -167,6 +171,7 @@ namespace openglScene
 
 		return textureID;
 	}
+
 
     
 

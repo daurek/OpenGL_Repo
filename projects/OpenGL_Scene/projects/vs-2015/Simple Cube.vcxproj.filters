@@ -22,6 +22,9 @@
     <Filter Include="Resource Files\transparentShader">
       <UniqueIdentifier>{d7e44c56-badb-457a-b523-fb6ea6604c45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\postProcessingShader">
+      <UniqueIdentifier>{5a9ef1e9-23d5-43e2-8d57-f91788709b87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\code\Mesh.hpp">
@@ -43,6 +46,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\code\Node.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\code\Drawable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,6 +77,9 @@
     <ClCompile Include="..\..\..\..\code\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\code\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\assets\shaders\default\fragment_shader.txt">
@@ -90,6 +99,12 @@
     </Text>
     <Text Include="..\..\..\..\assets\shaders\transparent\vertex_shader.txt">
       <Filter>Resource Files\transparentShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\postProcessing\vertex_shader.txt">
+      <Filter>Resource Files\postProcessingShader</Filter>
+    </Text>
+    <Text Include="..\..\..\..\assets\shaders\postProcessing\fragment_shader.txt">
+      <Filter>Resource Files\postProcessingShader</Filter>
     </Text>
   </ItemGroup>
 </Project>

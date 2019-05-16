@@ -16,6 +16,7 @@ namespace openglScene
 		std::string fragmentCode;
 		std::ifstream vShaderFile;
 		std::ifstream fShaderFile;
+
 		// ensure ifstream objects can throw exceptions:
 		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -72,17 +73,17 @@ namespace openglScene
 	void Shader::Render()
 	{
 		// Send Model matrix and render model
-		for (auto & model : modelsByShader)
+		for (auto & model : drawablesByShader)
 		{
 			setMatrix4("model_matrix", model->getTransform());
 			model->Render();
 		}
 	}
 
-	void Shader::AddModel(std::shared_ptr<Model> model)
+	void Shader::AddDrawable(Drawable * drawable)
 	{
-		if (model)
-			modelsByShader.push_back(model);
+		if (drawable != nullptr)
+			drawablesByShader.push_back(drawable);
 	}
 
 	void Shader::CheckErrors(unsigned int shader, std::string type)

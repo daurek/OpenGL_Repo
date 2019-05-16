@@ -19,9 +19,9 @@ namespace openglScene
     private:
 
 		std::shared_ptr<Camera>			camera;
-		std::shared_ptr<Skybox>			skybox;
+		// std::shared_ptr<Skybox>			skybox;
 
-        std::map<std::string, std::shared_ptr < Model >>	models;
+        std::map<std::string, std::shared_ptr < Drawable >>	drawables;
         std::map<std::string, std::shared_ptr < Shader >>	shaderList;
 
     public:

@@ -3,7 +3,8 @@
 
 #include <GL/glew.h> 
 #include <string>
-#include "Model.hpp"
+#include <vector>
+#include "Drawable.hpp"
 #include <glm/gtc/type_ptr.hpp>    
 
 namespace openglScene
@@ -14,11 +15,7 @@ namespace openglScene
 
     private:
 
-        Shader(const Shader & );
-
 		GLuint      shaderId;
-
-
 
     public:
 
@@ -28,13 +25,13 @@ namespace openglScene
 
 		void Render();
 
+
+		void AddDrawable(Drawable * drawable);
+
         GLuint getShaderID() const
         {
             return shaderId;
         }
-
-		void AddModel(std::shared_ptr<Model> model);
-
 		// Shader Property Setters
 
 		void setInt(const std::string &name, int value) const
@@ -72,7 +69,7 @@ namespace openglScene
 
 	private:
 
-		std::vector <std::shared_ptr<Model>> modelsByShader;
+		std::vector<Drawable *> drawablesByShader;
 
 		void CheckErrors(unsigned int shader, std::string type);
 

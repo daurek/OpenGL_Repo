@@ -12,7 +12,7 @@ extern "C"
 
 namespace openglScene
 {
-	Model::Model(const std::string & path, const std::string & texturePath)
+	Model::Model(Shader * shader, const std::string & path, const std::string & texturePath) : Drawable(shader)
 	{
 		// Create Assimp Importer
 		Assimp::Importer importer;
@@ -29,6 +29,7 @@ namespace openglScene
 		// Load meshes
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 			meshes.push_back(LoadMesh(scene->mMeshes[i], scene, texturePath));
+		
 		std::cout << "______________________________________________________" << std::endl;
 	}
 

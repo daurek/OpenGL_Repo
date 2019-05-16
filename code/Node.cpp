@@ -7,11 +7,12 @@ namespace openglScene
 	{
 		parent = nullptr;
 		translation = glm::translate(translation, glm::vec3(0.f, 0.f, 0.f));
+		rotation = glm::mat4(1.0f);
 		scaling = glm::scale(scaling, glm::vec3(1.f, 1.f, 1.f));
 		transform = glm::mat4(1.0f);
 	}
 
-	void Node::Move(glm::vec3 _movement)
+	void Node::Translate(glm::vec3 _movement)
 	{
 		translation = glm::translate(translation, _movement);
 	}

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\code\Camera.hpp" />
+    <ClInclude Include="..\..\..\..\code\Drawable.hpp" />
     <ClInclude Include="..\..\..\..\code\Mesh.hpp" />
     <ClInclude Include="..\..\..\..\code\Model.hpp" />
     <ClInclude Include="..\..\..\..\code\Node.hpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\code\Camera.cpp" />
+    <ClCompile Include="..\..\..\..\code\Drawable.cpp" />
     <ClCompile Include="..\..\..\..\code\main.cpp" />
     <ClCompile Include="..\..\..\..\code\Mesh.cpp" />
     <ClCompile Include="..\..\..\..\code\Model.cpp" />
@@ -40,6 +42,8 @@
   <ItemGroup>
     <Text Include="..\..\..\..\assets\shaders\default\fragment_shader.txt" />
     <Text Include="..\..\..\..\assets\shaders\default\vertex_shader.txt" />
+    <Text Include="..\..\..\..\assets\shaders\postProcessing\fragment_shader.txt" />
+    <Text Include="..\..\..\..\assets\shaders\postProcessing\vertex_shader.txt" />
     <Text Include="..\..\..\..\assets\shaders\skybox\skybox_fragment_shader.txt" />
     <Text Include="..\..\..\..\assets\shaders\skybox\skybox_vertex_shader.txt" />
     <Text Include="..\..\..\..\assets\shaders\transparent\fragment_shader.txt" />

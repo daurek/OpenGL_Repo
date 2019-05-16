@@ -2,16 +2,17 @@
 #define SKYBOX_HEADER
 
 #include <GL/glew.h>            // Debe incluirse antes que gl.h
-#include "Shader.hpp"
+#include "Drawable.hpp"
 #include <string>
 #include <memory>
+#include <vector>
 #include <map>
 #include <glm/glm.hpp>                          // vec3, vec4, ivec4, mat4
 
 namespace openglScene
 {
 
-    class Skybox
+    class Skybox : public Drawable
     {
 
     public:
@@ -19,17 +20,16 @@ namespace openglScene
 		unsigned int					cubemapTexture;
 		GLuint							vbo_id;                      // Id del VBO de las coordenadas
 		GLuint							vao_id;                      // Id del VAO del cubo
-		std::shared_ptr<Shader>			skyboxShader;
 
-        Skybox(const std::string & texture_path);
+        Skybox(Shader * shader, const std::string & texture_path);
 
-        void   Render ();
+		virtual void Update(glm::mat4 _transform = glm::mat4(1.0f)) override;
+        virtual void Render () override;
 
 	private:
 
 		unsigned int LoadCubemap(std::vector<std::string> faces);
-
-    };
+	};
 
 }
 

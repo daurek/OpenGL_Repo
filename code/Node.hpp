@@ -21,7 +21,7 @@ namespace openglScene
 
 		virtual void Update(glm::mat4 _transform = glm::mat4(1.0f)) = 0;
 
-		void Move(glm::vec3 _movement);
+		void Translate(glm::vec3 _movement);
 
 		void Rotate(glm::vec3 _axis, float angle);
 
