@@ -9,7 +9,8 @@ uniform mat4 view_matrix;
 
 void main()
 {
-    TexCoords = aPos;
+	// Transform to a mat3 then to a mat4 (should be done outside) to clear the last row
 	vec4 pos = projection_matrix * mat4(mat3(view_matrix)) * vec4(aPos, 1.0);
+    TexCoords = aPos;
     gl_Position = pos.xyww;
 }  

@@ -8,5 +8,6 @@ out vec4 fragment_color;
 
 void main()
 {
-	fragment_color = vec4(front_color, 0.5) * texture(diffuse, texCoord);
+	// Only difference between default and this Shader is the transparency (0.7)
+	fragment_color = vec4(front_color, 0.7) * texture(diffuse, texCoord);
 }

@@ -1,56 +1,59 @@
-#include <cassert>
-#include <GL/glew.h>            // Debe incluirse antes que gl.h
-#include "Scene.hpp"
+// Libraries
 #include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
-
-using namespace sf;
-using namespace openglScene;
+// Project
+#include "Scene.hpp"
 
 int main ()
 {
     // SFML Window
-	sf::Vector2i screenDimension(1280, 720);
-    Window window(VideoMode(screenDimension.x, screenDimension.y), "OpenGL_Scene", Style::Default, ContextSettings(32));
+	sf::Vector2u screenDimension(1280, 720);
+    sf::Window window(sf::VideoMode(screenDimension.x, screenDimension.y), "OpenGL_Scene", sf::Style::Default, sf::ContextSettings(32));
     window.setVerticalSyncEnabled (true);
 
     // Initialize Glew
     GLenum glew_initialization =  glewInit ();
     assert(glew_initialization == GLEW_OK);
 
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	// Clear and display loading screen
+	glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
 	window.display();
 
-    Scene scene(screenDimension.x, screenDimension.y);
+	// Create Scene
+    openglScene::Scene scene(screenDimension.x, screenDimension.y);
 
+	// Start loop
     bool running = true;
 
     do
     {
-        Event event;
+		// Check for window events
+        sf::Event event;
 
         while (window.pollEvent (event))
         {
             switch (event.type)
             {
-                case Event::Closed:
+			case sf::Event::Closed:
                 {
                     running = false;
                     break;
                 }
 
-                case Event::Resized:
+			case sf::Event::Resized:
                 {
-                    Vector2u window_size = window.getSize ();
+					// Resize window when changed 
+                    sf::Vector2u window_size = window.getSize ();
                     scene.Resize (window_size.x, window_size.y);
                     break;
                 }
             }
         }
 
-        glClear (GL_COLOR_BUFFER_BIT);
+		// Update Scene
         scene.Update ();
+		// Render Scene
         scene.Render ();
+		// Display window
         window.display ();
     }
     while (running);

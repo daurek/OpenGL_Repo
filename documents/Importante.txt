@@ -1,0 +1,8 @@
+Para moverse es WASD
+Para activar y desactivar el PostProcessing (en este caso desenfoque) es respectivamente F y G
+______
+Para compilar va necesitar la dll de asimp (que esta en Libraries/Assimp/Lib) asi que es necesario copiarla 
+al lado del ejecutable de Debug o Release (ya estara en binaries)
+__________
+No me dio tiempo para hacer la de Heightmap pero lo demas esta presente.
+Gracias y Saludos.
